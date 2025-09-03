@@ -248,9 +248,7 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "Authentication UI with Emergent Auth"
-    - "Dashboard UI with role-based content"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
