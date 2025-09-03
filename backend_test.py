@@ -402,8 +402,13 @@ class ScrapMasterTester:
         # Basic connectivity and health checks
         print("\n🔍 BASIC CONNECTIVITY TESTS")
         self.test_health_check()
+        self.test_database_connectivity()
         self.test_cors_headers()
         self.test_invalid_endpoints()
+        
+        # System initialization tests
+        print("\n🚀 SYSTEM INITIALIZATION TESTS")
+        self.test_admin_user_initialization()
         
         # Authentication tests
         print("\n🔐 AUTHENTICATION TESTS")
