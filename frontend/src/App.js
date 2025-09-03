@@ -373,6 +373,33 @@ const Dashboard = () => {
     setLoading(false);
   };
 
+  const handleAddScrapItem = (newItem) => {
+    setScrapItems([newItem, ...scrapItems]);
+    setStats(prev => ({
+      ...prev,
+      total_scrap_items: prev.total_scrap_items + 1,
+      pending_items: prev.pending_items + 1
+    }));
+  };
+
+  const handleStatusChange = (itemId, newStatus) => {
+    setScrapItems(prev => prev.map(item => 
+      item.id === itemId ? { ...item, status: newStatus } : item
+    ));
+    
+    // Update stats based on status change
+    setStats(prev => {
+      const updates = { ...prev };
+      if (newStatus === 'approved') {
+        updates.pending_items -= 1;
+        updates.approved_items += 1;
+      } else if (newStatus === 'rejected') {
+        updates.pending_items -= 1;
+      }
+      return updates;
+    });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
