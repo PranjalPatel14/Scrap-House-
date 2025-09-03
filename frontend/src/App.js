@@ -178,14 +178,8 @@ const Dashboard = () => {
   }, []);
 
   const fetchStats = async () => {
-    try {
-      const response = await axios.get(`${API}/dashboard/stats`, { withCredentials: true });
-      setStats(response.data);
-    } catch (error) {
-      console.error('Error fetching stats:', error);
-    } finally {
-      setLoading(false);
-    }
+    // Disabled for demo - using mock data
+    setLoading(false);
   };
 
   if (loading) {
