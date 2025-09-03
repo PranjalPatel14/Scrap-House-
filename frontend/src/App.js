@@ -18,8 +18,15 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Mock admin user for demonstration - bypassing authentication
+  const [user, setUser] = useState({
+    id: "admin-demo-id",
+    email: "admin@scrapmaster.com",
+    name: "Admin Demo User",
+    picture: "https://via.placeholder.com/40",
+    role: "admin"
+  });
+  const [loading, setLoading] = useState(false); // Set to false since we're using mock data
 
   const login = (userData, sessionToken) => {
     setUser(userData);
@@ -38,18 +45,13 @@ const AuthProvider = ({ children }) => {
   };
 
   const checkAuth = async () => {
-    try {
-      const response = await axios.get(`${API}/users/me`, { withCredentials: true });
-      setUser(response.data);
-    } catch (error) {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
+    // Bypassed - using mock user
+    setLoading(false);
   };
 
   useEffect(() => {
-    checkAuth();
+    // Auto-set mock admin user for demonstration
+    setLoading(false);
   }, []);
 
   return (
