@@ -93,22 +93,43 @@ class ScrapMasterTester:
         protected_endpoints = [
             ("/users/me", "GET"),
             ("/scrap-items", "GET"),
-            ("/scrap-items", "POST"),
             ("/dashboard/stats", "GET")
         ]
         
+        # For POST endpoints, we need to send valid data to avoid 422 validation errors
+        post_endpoints = [
+            ("/scrap-items", {
+                "scrap_type": "Metal",
+                "weight": 5.0,
+                "price_offered": 100.0
+            })
+        ]
+        
         all_protected = True
+        
+        # Test GET endpoints
         for endpoint, method in protected_endpoints:
             try:
-                if method == "GET":
-                    response = self.session.get(f"{BASE_URL}{endpoint}")
-                elif method == "POST":
-                    response = self.session.post(f"{BASE_URL}{endpoint}", json={})
+                response = self.session.get(f"{BASE_URL}{endpoint}")
                 
                 if response.status_code == 401:
                     self.log_result(f"Protected Endpoint {endpoint}", True, f"{method} {endpoint} correctly requires authentication")
                 else:
                     self.log_result(f"Protected Endpoint {endpoint}", False, f"{method} {endpoint} should return 401, got {response.status_code}")
+                    all_protected = False
+            except Exception as e:
+                self.log_result(f"Protected Endpoint {endpoint}", False, f"Error testing {endpoint}: {str(e)}")
+                all_protected = False
+        
+        # Test POST endpoints with valid data
+        for endpoint, data in post_endpoints:
+            try:
+                response = self.session.post(f"{BASE_URL}{endpoint}", json=data)
+                
+                if response.status_code == 401:
+                    self.log_result(f"Protected Endpoint {endpoint}", True, f"POST {endpoint} correctly requires authentication")
+                else:
+                    self.log_result(f"Protected Endpoint {endpoint}", False, f"POST {endpoint} should return 401, got {response.status_code}")
                     all_protected = False
             except Exception as e:
                 self.log_result(f"Protected Endpoint {endpoint}", False, f"Error testing {endpoint}: {str(e)}")
