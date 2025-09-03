@@ -139,27 +139,51 @@ class ScrapMasterTester:
     
     def test_admin_endpoints_without_admin_role(self):
         """Test that admin endpoints require admin role"""
-        admin_endpoints = [
-            ("/scrap-items/all", "GET"),
-            ("/companies", "GET"),
-            ("/companies", "POST"),
-            ("/sales", "GET"),
-            ("/sales", "POST")
+        admin_get_endpoints = [
+            "/scrap-items/all",
+            "/companies", 
+            "/sales"
         ]
         
-        # First test without any auth
+        admin_post_endpoints = [
+            ("/companies", {
+                "name": "Test Recycling Co",
+                "contact": "+1234567890", 
+                "address": "123 Test Street",
+                "email": "test@recycling.com"
+            }),
+            ("/sales", {
+                "scrap_item_id": "test-id",
+                "company_id": "test-company-id",
+                "selling_price": 150.0
+            })
+        ]
+        
         all_protected = True
-        for endpoint, method in admin_endpoints:
+        
+        # Test GET endpoints
+        for endpoint in admin_get_endpoints:
             try:
-                if method == "GET":
-                    response = self.session.get(f"{BASE_URL}{endpoint}")
-                elif method == "POST":
-                    response = self.session.post(f"{BASE_URL}{endpoint}", json={})
+                response = self.session.get(f"{BASE_URL}{endpoint}")
                 
                 if response.status_code in [401, 403]:
-                    self.log_result(f"Admin Endpoint {endpoint}", True, f"{method} {endpoint} correctly requires admin access")
+                    self.log_result(f"Admin Endpoint {endpoint}", True, f"GET {endpoint} correctly requires admin access")
                 else:
-                    self.log_result(f"Admin Endpoint {endpoint}", False, f"{method} {endpoint} should return 401/403, got {response.status_code}")
+                    self.log_result(f"Admin Endpoint {endpoint}", False, f"GET {endpoint} should return 401/403, got {response.status_code}")
+                    all_protected = False
+            except Exception as e:
+                self.log_result(f"Admin Endpoint {endpoint}", False, f"Error testing admin endpoint {endpoint}: {str(e)}")
+                all_protected = False
+        
+        # Test POST endpoints with valid data
+        for endpoint, data in admin_post_endpoints:
+            try:
+                response = self.session.post(f"{BASE_URL}{endpoint}", json=data)
+                
+                if response.status_code in [401, 403]:
+                    self.log_result(f"Admin Endpoint {endpoint}", True, f"POST {endpoint} correctly requires admin access")
+                else:
+                    self.log_result(f"Admin Endpoint {endpoint}", False, f"POST {endpoint} should return 401/403, got {response.status_code}")
                     all_protected = False
             except Exception as e:
                 self.log_result(f"Admin Endpoint {endpoint}", False, f"Error testing admin endpoint {endpoint}: {str(e)}")
