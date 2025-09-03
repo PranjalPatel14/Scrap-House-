@@ -591,12 +591,17 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {user?.role === 'admin' ? (
               <>
-                <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-400 hover:bg-green-50 transition-colors">
+                <button 
+                  onClick={() => setShowScrapItems(!showScrapItems)}
+                  className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-400 hover:bg-green-50 transition-colors"
+                >
                   <div className="text-center">
                     <svg className="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    <p className="text-sm font-medium text-gray-600">Manage Scrap Items</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      {showScrapItems ? 'Hide' : 'Manage'} Scrap Items
+                    </p>
                   </div>
                 </button>
                 
@@ -620,7 +625,10 @@ const Dashboard = () => {
               </>
             ) : (
               <>
-                <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-400 hover:bg-green-50 transition-colors">
+                <button 
+                  onClick={() => setShowAddForm(true)}
+                  className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-400 hover:bg-green-50 transition-colors"
+                >
                   <div className="text-center">
                     <svg className="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -629,12 +637,17 @@ const Dashboard = () => {
                   </div>
                 </button>
                 
-                <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-colors">
+                <button 
+                  onClick={() => setShowScrapItems(!showScrapItems)}
+                  className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                >
                   <div className="text-center">
                     <svg className="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
-                    <p className="text-sm font-medium text-gray-600">My Scrap History</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      {showScrapItems ? 'Hide' : 'My'} Scrap History
+                    </p>
                   </div>
                 </button>
                 
@@ -650,6 +663,38 @@ const Dashboard = () => {
             )}
           </div>
         </div>
+
+        {/* Scrap Items List */}
+        {showScrapItems && (
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {user?.role === 'admin' ? 'All Scrap Items' : 'My Scrap Items'}
+              </h3>
+              <button
+                onClick={() => setShowScrapItems(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <ScrapItemsList 
+              items={scrapItems} 
+              onStatusChange={handleStatusChange}
+              isAdmin={user?.role === 'admin'}
+            />
+          </div>
+        )}
+
+        {/* Add Scrap Form Modal */}
+        {showAddForm && (
+          <AddScrapForm 
+            onClose={() => setShowAddForm(false)}
+            onAdd={handleAddScrapItem}
+          />
+        )}
       </div>
     </div>
   );
