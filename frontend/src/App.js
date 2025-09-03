@@ -158,7 +158,167 @@ const Login = () => {
   );
 };
 
-// Dashboard component
+// Add Scrap Item Component
+const AddScrapForm = ({ onClose, onAdd }) => {
+  const [formData, setFormData] = useState({
+    scrap_type: 'Metal',
+    weight: '',
+    price_offered: '',
+    description: ''
+  });
+
+  const scrapTypes = ['Metal', 'Paper', 'Plastic', 'Glass', 'Electronics'];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.weight && formData.price_offered) {
+      const newItem = {
+        id: `item-${Date.now()}`,
+        ...formData,
+        weight: parseFloat(formData.weight),
+        price_offered: parseFloat(formData.price_offered),
+        status: 'pending',
+        created_at: new Date().toISOString()
+      };
+      onAdd(newItem);
+      onClose();
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-semibold text-gray-900">Add New Scrap Item</h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Scrap Type</label>
+            <select 
+              value={formData.scrap_type}
+              onChange={(e) => setFormData({...formData, scrap_type: e.target.value})}
+              className="form-input"
+            >
+              {scrapTypes.map(type => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={formData.weight}
+              onChange={(e) => setFormData({...formData, weight: e.target.value})}
+              className="form-input"
+              placeholder="Enter weight in kg"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Price Offered (₹)</label>
+            <input
+              type="number"
+              step="0.01"
+              value={formData.price_offered}
+              onChange={(e) => setFormData({...formData, price_offered: e.target.value})}
+              className="form-input"
+              placeholder="Enter price in rupees"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              className="form-input"
+              rows="3"
+              placeholder="Brief description of the scrap item"
+            />
+          </div>
+          
+          <div className="flex space-x-3 pt-4">
+            <button type="submit" className="btn-primary flex-1">
+              Add Scrap Item
+            </button>
+            <button type="button" onClick={onClose} className="btn-secondary flex-1">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+// Scrap Items List Component
+const ScrapItemsList = ({ items, onStatusChange, isAdmin }) => {
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-8 text-gray-500">
+        <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4-8-4m16 0v10l-8 4-8-4V7" />
+        </svg>
+        <p>No scrap items found</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {items.map(item => (
+        <div key={item.id} className="card card-hover p-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <div className="flex items-center space-x-2 mb-2">
+                <h4 className="font-medium text-gray-900">{item.scrap_type}</h4>
+                <span className={`px-2 py-1 text-xs rounded-full status-${item.status}`}>
+                  {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                </span>
+              </div>
+              <div className="text-sm text-gray-600 space-y-1">
+                <p><span className="font-medium">Weight:</span> {item.weight} kg</p>
+                <p><span className="font-medium">Price:</span> ₹{item.price_offered}</p>
+                {item.description && (
+                  <p><span className="font-medium">Description:</span> {item.description}</p>
+                )}
+                <p><span className="font-medium">Date:</span> {new Date(item.created_at).toLocaleDateString()}</p>
+              </div>
+            </div>
+            
+            {isAdmin && item.status === 'pending' && (
+              <div className="flex space-x-2 ml-4">
+                <button
+                  onClick={() => onStatusChange(item.id, 'approved')}
+                  className="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => onStatusChange(item.id, 'rejected')}
+                  className="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
+                >
+                  Reject
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 const Dashboard = () => {
   const { user, logout } = useAuth();
   // Mock stats for demonstration
