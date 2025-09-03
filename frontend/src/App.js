@@ -174,7 +174,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false); // Disabled for demo
 
   useEffect(() => {
-    fetchStats();
+    // Mock data loaded, no API call needed for demo
   }, []);
 
   const fetchStats = async () => {
