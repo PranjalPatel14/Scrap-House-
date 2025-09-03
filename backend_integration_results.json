@@ -1,0 +1,136 @@
+{
+  "summary": {
+    "total": 18,
+    "passed": 18,
+    "failed": 0,
+    "success_rate": 100.0
+  },
+  "results": [
+    {
+      "test": "API Structure /auth/login",
+      "success": true,
+      "message": "GET /auth/login returns expected status 200",
+      "timestamp": "2025-09-03T02:10:15.831141",
+      "details": {}
+    },
+    {
+      "test": "API Structure /auth/profile",
+      "success": true,
+      "message": "GET /auth/profile returns expected status 400",
+      "timestamp": "2025-09-03T02:10:15.841385",
+      "details": {}
+    },
+    {
+      "test": "API Structure /auth/logout",
+      "success": true,
+      "message": "POST /auth/logout returns expected status 200",
+      "timestamp": "2025-09-03T02:10:15.890687",
+      "details": {}
+    },
+    {
+      "test": "API Structure /scrap-types",
+      "success": true,
+      "message": "GET /scrap-types returns expected status 200",
+      "timestamp": "2025-09-03T02:10:15.901681",
+      "details": {}
+    },
+    {
+      "test": "API Structure /users/me",
+      "success": true,
+      "message": "GET /users/me returns expected status 401",
+      "timestamp": "2025-09-03T02:10:15.910989",
+      "details": {}
+    },
+    {
+      "test": "API Structure /scrap-items",
+      "success": true,
+      "message": "GET /scrap-items returns expected status 401",
+      "timestamp": "2025-09-03T02:10:15.959186",
+      "details": {}
+    },
+    {
+      "test": "API Structure /dashboard/stats",
+      "success": true,
+      "message": "GET /dashboard/stats returns expected status 401",
+      "timestamp": "2025-09-03T02:10:15.967206",
+      "details": {}
+    },
+    {
+      "test": "API Structure /scrap-items/all",
+      "success": true,
+      "message": "GET /scrap-items/all returns expected status 401",
+      "timestamp": "2025-09-03T02:10:15.974441",
+      "details": {}
+    },
+    {
+      "test": "API Structure /companies",
+      "success": true,
+      "message": "GET /companies returns expected status 401",
+      "timestamp": "2025-09-03T02:10:15.981261",
+      "details": {}
+    },
+    {
+      "test": "API Structure /sales",
+      "success": true,
+      "message": "GET /sales returns expected status 401",
+      "timestamp": "2025-09-03T02:10:15.991777",
+      "details": {}
+    },
+    {
+      "test": "Data Validation /scrap-items",
+      "success": true,
+      "message": "Correctly validates required fields: ['scrap_type', 'weight', 'price_offered']",
+      "timestamp": "2025-09-03T02:10:16.040034",
+      "details": {}
+    },
+    {
+      "test": "Data Validation /companies",
+      "success": true,
+      "message": "Correctly validates required fields: ['contact', 'address']",
+      "timestamp": "2025-09-03T02:10:16.049838",
+      "details": {}
+    },
+    {
+      "test": "Data Validation /sales",
+      "success": true,
+      "message": "Correctly validates required fields: ['scrap_item_id', 'company_id']",
+      "timestamp": "2025-09-03T02:10:16.057314",
+      "details": {}
+    },
+    {
+      "test": "Response Format /scrap-types",
+      "success": true,
+      "message": "Response format correct with keys: ['scrap_types']",
+      "timestamp": "2025-09-03T02:10:16.064473",
+      "details": {}
+    },
+    {
+      "test": "Response Format /auth/login",
+      "success": true,
+      "message": "Response format correct with keys: ['auth_url']",
+      "timestamp": "2025-09-03T02:10:16.072778",
+      "details": {}
+    },
+    {
+      "test": "Error Handling /scrap-items/nonexistent-id/status",
+      "success": true,
+      "message": "Correctly handles error with status 401",
+      "timestamp": "2025-09-03T02:10:16.121341",
+      "details": {}
+    },
+    {
+      "test": "Error Handling /scrap-items",
+      "success": true,
+      "message": "Correctly handles error with status 422",
+      "timestamp": "2025-09-03T02:10:16.129054",
+      "details": {}
+    },
+    {
+      "test": "Security Headers",
+      "success": true,
+      "message": "Security checks passed: ['Correct content type header']",
+      "timestamp": "2025-09-03T02:10:16.137677",
+      "details": {}
+    }
+  ]
+}
