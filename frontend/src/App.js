@@ -332,6 +332,37 @@ const Dashboard = () => {
     total_companies: 12
   });
   const [loading, setLoading] = useState(false); // Disabled for demo
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showScrapItems, setShowScrapItems] = useState(false);
+  const [scrapItems, setScrapItems] = useState([
+    {
+      id: 'item-1',
+      scrap_type: 'Metal',
+      weight: 15.5,
+      price_offered: 2500,
+      status: 'pending',
+      description: 'Old iron sheets and scraps',
+      created_at: '2024-01-15T10:30:00Z'
+    },
+    {
+      id: 'item-2',
+      scrap_type: 'Electronics',
+      weight: 3.2,
+      price_offered: 800,
+      status: 'approved',
+      description: 'Old computer parts',
+      created_at: '2024-01-14T14:20:00Z'
+    },
+    {
+      id: 'item-3',
+      scrap_type: 'Paper',
+      weight: 25.0,
+      price_offered: 500,
+      status: 'sold',
+      description: 'Newspapers and magazines',
+      created_at: '2024-01-13T09:15:00Z'
+    }
+  ]);
 
   useEffect(() => {
     // Mock data loaded, no API call needed for demo
