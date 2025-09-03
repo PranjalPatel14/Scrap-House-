@@ -1,0 +1,157 @@
+{
+  "summary": {
+    "total": 21,
+    "passed": 16,
+    "failed": 5,
+    "success_rate": 76.19047619047619
+  },
+  "results": [
+    {
+      "test": "API Health Check",
+      "success": true,
+      "message": "API is accessible and returns scrap types",
+      "timestamp": "2025-09-03T02:07:58.516555",
+      "details": {}
+    },
+    {
+      "test": "CORS Headers",
+      "success": false,
+      "message": "Missing CORS headers: ['Access-Control-Allow-Origin', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Headers']",
+      "timestamp": "2025-09-03T02:07:58.564180",
+      "details": {}
+    },
+    {
+      "test": "Invalid Endpoint /invalid-endpoint",
+      "success": true,
+      "message": "Correctly returns 404 for /invalid-endpoint",
+      "timestamp": "2025-09-03T02:07:58.575437",
+      "details": {}
+    },
+    {
+      "test": "Invalid Endpoint /api/invalid",
+      "success": true,
+      "message": "Correctly returns 404 for /api/invalid",
+      "timestamp": "2025-09-03T02:07:58.623260",
+      "details": {}
+    },
+    {
+      "test": "Invalid Endpoint /scrap-items/invalid-action",
+      "success": true,
+      "message": "Correctly returns 404 for /scrap-items/invalid-action",
+      "timestamp": "2025-09-03T02:07:58.634534",
+      "details": {}
+    },
+    {
+      "test": "Auth Login Endpoint",
+      "success": true,
+      "message": "Login endpoint returns valid auth URL",
+      "timestamp": "2025-09-03T02:07:58.645108",
+      "details": {}
+    },
+    {
+      "test": "Auth Profile No Session",
+      "success": true,
+      "message": "Profile endpoint correctly rejects requests without session ID",
+      "timestamp": "2025-09-03T02:07:58.693068",
+      "details": {}
+    },
+    {
+      "test": "Logout Endpoint",
+      "success": true,
+      "message": "Logout endpoint works correctly",
+      "timestamp": "2025-09-03T02:07:58.702847",
+      "details": {}
+    },
+    {
+      "test": "Protected Endpoint /users/me",
+      "success": true,
+      "message": "GET /users/me correctly requires authentication",
+      "timestamp": "2025-09-03T02:07:58.711117",
+      "details": {}
+    },
+    {
+      "test": "Protected Endpoint /scrap-items",
+      "success": true,
+      "message": "GET /scrap-items correctly requires authentication",
+      "timestamp": "2025-09-03T02:07:58.758885",
+      "details": {}
+    },
+    {
+      "test": "Protected Endpoint /scrap-items",
+      "success": false,
+      "message": "POST /scrap-items should return 401, got 422",
+      "timestamp": "2025-09-03T02:07:58.767380",
+      "details": {}
+    },
+    {
+      "test": "Protected Endpoint /dashboard/stats",
+      "success": false,
+      "message": "GET /dashboard/stats should return 401, got 404",
+      "timestamp": "2025-09-03T02:07:58.921251",
+      "details": {}
+    },
+    {
+      "test": "Admin Endpoint /scrap-items/all",
+      "success": true,
+      "message": "GET /scrap-items/all correctly requires admin access",
+      "timestamp": "2025-09-03T02:07:58.929094",
+      "details": {}
+    },
+    {
+      "test": "Admin Endpoint /companies",
+      "success": true,
+      "message": "GET /companies correctly requires admin access",
+      "timestamp": "2025-09-03T02:07:58.976202",
+      "details": {}
+    },
+    {
+      "test": "Admin Endpoint /companies",
+      "success": false,
+      "message": "POST /companies should return 401/403, got 422",
+      "timestamp": "2025-09-03T02:07:58.986198",
+      "details": {}
+    },
+    {
+      "test": "Admin Endpoint /sales",
+      "success": true,
+      "message": "GET /sales correctly requires admin access",
+      "timestamp": "2025-09-03T02:07:58.993478",
+      "details": {}
+    },
+    {
+      "test": "Admin Endpoint /sales",
+      "success": false,
+      "message": "POST /sales should return 401/403, got 422",
+      "timestamp": "2025-09-03T02:07:59.002252",
+      "details": {}
+    },
+    {
+      "test": "Scrap Types Endpoint",
+      "success": true,
+      "message": "Returns all expected scrap types: ['Metal', 'Paper', 'Plastic', 'Glass', 'Electronics']",
+      "timestamp": "2025-09-03T02:07:59.050250",
+      "details": {}
+    },
+    {
+      "test": "Scrap Item Creation No Auth",
+      "success": true,
+      "message": "Scrap item creation correctly requires authentication",
+      "timestamp": "2025-09-03T02:07:59.057226",
+      "details": {}
+    },
+    {
+      "test": "Company Creation No Auth",
+      "success": true,
+      "message": "Company creation correctly requires admin authentication",
+      "timestamp": "2025-09-03T02:07:59.064310",
+      "details": {}
+    },
+    {
+      "test": "Dashboard Stats No Auth",
+      "success": true,
+      "message": "Dashboard stats correctly requires authentication",
+      "timestamp": "2025-09-03T02:07:59.071264",
+      "details": {}
+    }
+  ]
+}
