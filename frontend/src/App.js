@@ -161,8 +161,17 @@ const Login = () => {
 // Dashboard component
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const [stats, setStats] = useState({});
-  const [loading, setLoading] = useState(true);
+  // Mock stats for demonstration
+  const [stats, setStats] = useState({
+    total_scrap_items: 156,
+    pending_items: 23,
+    approved_items: 89,
+    sold_items: 44,
+    total_revenue: 125000,
+    total_profit: 45000,
+    total_companies: 12
+  });
+  const [loading, setLoading] = useState(false); // Disabled for demo
 
   useEffect(() => {
     fetchStats();
